@@ -12,13 +12,23 @@
 
 #include "libft.h"
 
+static void	substractions(char **ndl, char **hay, size_t *flag, size_t *len)
+{
+	*ndl -= *flag;
+	*hay = *hay - *flag + 1;
+	*len -= *flag;
+	*flag = 0;
+}
+
 static char	*ft_loop(char *ndl, char *hay, size_t ndl_size, size_t len)
 {
 	size_t	flag;
 
 	flag = 0;
-	while (*ndl != '\0' && *hay != '\0' && len > 0)
+	while (len > 0)
 	{
+		if (*hay == '\0' || *ndl == '\0')
+			break ;
 		if (*ndl == *hay)
 		{
 			flag++;
@@ -26,14 +36,17 @@ static char	*ft_loop(char *ndl, char *hay, size_t ndl_size, size_t len)
 				break ;
 			ndl++;
 		}
-		else
-			flag = 0;
+		else if (ft_strlen(ndl) != ndl_size && flag > 0)
+		{
+			substractions(&ndl, &hay, &flag, &len);
+			continue ;
+		}
 		len--;
 		hay++;
 	}
-	if (flag == ndl_size)
+	if (flag == ndl_size && flag != 0)
 		return (hay - flag + 1);
-	return (0);
+	return (NULL);
 }
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
@@ -41,13 +54,15 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	char		*hay;
 	char		*ndl;
 	size_t		ndl_size;
+	size_t		hay_size;
 
 	hay = (char *)haystack;
 	ndl = (char *)needle;
 	ndl_size = ft_strlen(ndl);
-	if (ndl_size == 0)
+	hay_size = ft_strlen(hay);
+	if (ndl_size == 0 || haystack == needle)
 		return ((char *)hay);
-	if (ft_strlen(hay) < ndl_size)
-		return (0);
+	if (hay_size < ndl_size || ndl_size > len)
+		return (NULL);
 	return (ft_loop(ndl, hay, ndl_size, len));
 }

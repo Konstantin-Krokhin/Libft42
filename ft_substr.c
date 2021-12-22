@@ -16,12 +16,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*rtn;
 	int		i;
-	size_t	s_len;
 
 	i = 0;
-	s_len = ft_strlen(s);
-	if (start + len + 1 > s_len)
-		return (0);
+	if (!s)
+		return (NULL);
+	if ((size_t)start > ft_strlen(s))
+		return (ft_strdup(""));
 	rtn = malloc((len + 1) * sizeof(char));
 	if (!rtn)
 		return (0);

@@ -33,15 +33,8 @@ static int	check_sign(const char *str, size_t i, int sign)
 	return (sign);
 }
 
-int	ft_atoi(const char *str)
+static int	loop(const char *str, int sign, size_t i, int numb)
 {
-	int		sign;
-	size_t	i;
-	int		numb;
-
-	i = 0;
-	numb = 0;
-	sign = 1;
 	while (i < ft_strlen(str))
 	{
 		if (checks(str, i) == false)
@@ -56,9 +49,23 @@ int	ft_atoi(const char *str)
 		}
 		if (str[i] >= '0' && str[i] <= '9')
 			numb = (numb * 10) + (str[i] - '0');
+		else if (numb != 0)
+			break ;
 		i++;
 	}
 	return (numb * sign);
+}
+
+int	ft_atoi(const char *str)
+{
+	int		sign;
+	size_t	i;
+	int		numb;
+
+	i = 0;
+	numb = 0;
+	sign = 1;
+	return (loop(str, sign, i, numb));
 }
 
 // static bool check2(const char *str, size_t i)

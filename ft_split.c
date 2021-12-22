@@ -32,19 +32,20 @@ static int	countReturnArraySize(char const *s, char c,
 	return (delimiterCount);
 }
 
-static char	*extractWord(char *word, char *wordStart, int wordSize)
+static char	*extractWord(char *word, char *wordStart, int *wordSize)
 {
 	int	count;
 	int	wordStartCnt;
 
 	count = 0;
 	wordStartCnt = 0;
-	word = malloc(sizeof(char) * (wordSize + 1));
+	word = malloc(sizeof(char) * (*wordSize + 1));
 	if (!word)
 		return (0);
-	while (count != wordSize)
+	while (count != *wordSize)
 		word[count++] = wordStart[wordStartCnt++];
 	word[count] = '\0';
+	*wordSize = 0;
 	return (word);
 }
 
@@ -74,26 +75,23 @@ static char	**fillReturnArray(char **rtn, char const *s, char c, int i)
 			wordSize++;
 		if (enterFlag == 0 && wordSize > 0)
 		{
-			word = extractWord(word, wordStart, wordSize);
+			word = extractWord(word, wordStart, &wordSize);
 			rtn[cnt++] = word;
-			wordSize = 0;
 		}
 		i++;
 	}
 	if (enterFlag == 1 && wordSize > 0)
 	{
-		word = extractWord(word, wordStart, wordSize);
+		word = extractWord(word, wordStart, &wordSize);
 		rtn[cnt++] = word;
-		wordSize = 0;
 	}
-	word = 0;
-	rtn[cnt] = word;
+	rtn[cnt] = 0;
 	return (rtn);
 }
 
 char	**ft_split(char const *s, char c)
 {
-    char	**rtn;
+	char	**rtn;
 	int		delimiterCount;
 	int		i;
 
@@ -105,5 +103,5 @@ char	**ft_split(char const *s, char c)
 		return (0);
 	i = 0;
 	rtn = fillReturnArray(rtn, s, c, i);
-    return (rtn);
+	return (rtn);
 }
