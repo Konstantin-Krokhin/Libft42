@@ -24,6 +24,8 @@ char	*ft_strrchr(const char *s, int c)
 	flag = 0;
 	f = (char *)s;
 	len = ft_strlen(f);
+	if (c < 0 || c > 255)
+		return (f);
 	while (i <= len)
 	{
 		if (f[i] == c)

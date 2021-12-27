@@ -14,9 +14,17 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-    void	*rtn;
+	char			*rtn;
+	unsigned int	i;
 
-	rtn = malloc(1);
-
-    return (rtn);
+	i = 0;
+	rtn = ft_strdup(s);
+	if (!rtn)
+		return (rtn = NULL);
+	while (s[i])
+	{
+		rtn[i] = f(i, s[i]);
+		i++;
+	}
+	return (rtn);
 }

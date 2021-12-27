@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Konstantin Krokhin <kokrokhi@students.42wo +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 11:30:40 by Konstantin Krokh  #+#    #+#             */
-/*   Updated: 2021/12/09 12:17:47 by Konstantin Krokh ###   ########.fr       */
+/*   Created: 2021/12/08 11:31:12 by Konstantin Krokh  #+#    #+#             */
+/*   Updated: 2021/12/08 11:33:31 by Konstantin Krokh ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+t_list	*ft_lstnew(void *content)
 {
-	unsigned char	*rtn;
-	size_t			i;
+	t_list	*list;
 
-	i = 0;
-	rtn = malloc(size * count);
-	if (!rtn)
-		return (NULL);
-	while (i < (count * size) && rtn)
-	{
-		rtn[i] = '\0';
-		i++;
-	}
-	return (rtn);
+	list = malloc(sizeof(t_list));
+	list->content = content;
+	list->next = NULL;
+	return (list);
 }
