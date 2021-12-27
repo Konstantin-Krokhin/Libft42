@@ -17,4 +17,5 @@ void	ft_lstadd_front(t_list **lst, t_list *n)
 	if (!lst || !n)
 		return ;
 	n->next = *lst;
+	*lst = n;
 }
